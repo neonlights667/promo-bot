@@ -1,0 +1,8 @@
+.env
+data/
+*.db
+*.db-*
+*.exe
+coverage.out
+campaign.json
+.cache/

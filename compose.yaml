@@ -1,0 +1,22 @@
+services:
+  bot:
+    build: .
+    restart: unless-stopped
+    env_file: .env
+    environment:
+      LISTEN_ADDR: 0.0.0.0:8080
+      CONFIG_PATH: /app/campaign.json
+      DB_PATH: /app/data/bot.db
+    ports:
+      - "127.0.0.1:8080:8080"
+    volumes:
+      - ./campaign.json:/app/campaign.json:ro
+      - bot-data:/app/data
+    healthcheck:
+      test: ["CMD", "wget", "-q", "-O", "-", "http://127.0.0.1:8080/healthz"]
+      interval: 30s
+      timeout: 3s
+      retries: 3
+    stop_grace_period: 30s
+volumes:
+  bot-data:
